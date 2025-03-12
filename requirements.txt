@@ -1,0 +1,7 @@
+Flask
+Flask-CORS
+scikit-learn
+pandas
+joblib
+gunicorn
+pickle-mixin
