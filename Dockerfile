@@ -1,18 +1,22 @@
-# Use Python 3.12 as the base image
+# Use Python 3.12 as base image
 FROM python:3.12
 
-# Set the working directory inside the container
+# Set working directory inside the container
 WORKDIR /app
 
-# Copy requirements file and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application files
+# Copy all project files
 COPY . .
 
-# Expose the application port (8080 as used in the Rahti deployment)
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Set environment variables
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=development 
+ENV DEBUG=True
+
+# Expose port 8080
 EXPOSE 8080
 
-# Run the application using Waitress
-CMD ["python", "app.py"]
+# Run the application
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=8080"]
